@@ -1,6 +1,6 @@
 # Pixelcrop 📸
 
-⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶_
+⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶⠶
 
 Instantly remove the background from any image with a single click. This project is a fully-featured, landing-page-style Next.js application powered by the `@imgly/background-removal-node` library.
 <img width="608" height="352" alt="Image" src="https://github.com/user-attachments/assets/e817c623-2d0a-4276-8896-2f3d616a392b" />
