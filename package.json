@@ -15,8 +15,7 @@
     "postinstall": "mkdir -p public/assets && cp -R node_modules/@imgly/background-removal-node/dist/* public/assets/"
   },
   "dependencies": {
-    "@imgly/background-removal": "^1.5.8",
-    "onnxruntime-web": "^1.21.0-dev.20250114-228dd16893",
+    "@imgly/background-removal-node": "^1.4.5",
     "next": "15.5.6",
     "react": "19.1.0",
     "react-dom": "19.1.0"
