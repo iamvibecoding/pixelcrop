@@ -48,3 +48,6 @@ next-env.d.ts
 *.tflite
 *.dat
 *.wasm
+
+# Local Netlify folder
+.netlify
