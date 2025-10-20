@@ -1,9 +1,8 @@
-import { removeBackground } from "@imgly/background-removal-node";
+import { removeBackground } from "@imgly/background-removal";
 import { NextResponse } from "next/server";
-import path from "path";
-import { promises as fs } from "fs";
 
-export const runtime = "nodejs";
+// Switch to Edge Runtime
+export const runtime = "edge";
 
 export async function POST(request: Request) {
   try {
@@ -16,20 +15,9 @@ export async function POST(request: Request) {
 
     console.log(`[API INFO] File received: ${file.name}, Type: ${file.type}`);
 
-    // Try loading local "large.onnx"
-    const modelPath = path.join(process.cwd(), "models", "large.onnx");
-    let modelConfig: string | { buffer: Buffer } = "medium"; // FIX: Replace 'any' with proper type
-
-    try {
-      const modelBuffer = await fs.readFile(modelPath);
-      console.log("[API INFO] Using local large.onnx model");
-      modelConfig = { buffer: modelBuffer };
-    } catch {
-      console.warn("[API WARN] large.onnx not found locally — falling back to medium model");
-    }
-
+    // Use web-based background removal (not the Node version)
     const processedImageBlob = await removeBackground(file, {
-      model: modelConfig,
+      model: "medium",
       output: {
         type: "foreground",
         format: "image/png",
@@ -43,7 +31,7 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "image/png" }
     });
 
-  } catch (err: unknown) { // FIX: Replace 'any' with 'unknown'
+  } catch (err: unknown) {
     console.error("API CRITICAL ERROR", err);
     const errorMessage = err instanceof Error ? err.message : "Unknown error";
     return NextResponse.json({ error: errorMessage }, { status: 500 });

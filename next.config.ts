@@ -12,6 +12,17 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  
+  // Exclude large dependencies from tracing
+  outputFileTracing: true,
+  experimental: {
+    outputFileTracingExcludes: {
+      '/api/remove-background': [
+        'node_modules/onnxruntime-node/bin/**/*',
+      ],
+    },
+  },
+
   webpack: (config: Configuration, { isServer }: WebpackContext) => {
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
@@ -26,6 +37,7 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+
   serverExternalPackages: ["@imgly/background-removal-node"],
 };
 
