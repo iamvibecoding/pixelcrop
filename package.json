@@ -9,6 +9,7 @@
   "author": "iamvibecoding",
   "scripts": {
     "dev": "next dev",
+
     "build": "mkdir -p public/assets && cp -R node_modules/@imgly/background-removal-node/dist/* public/assets/ && next build",
     "start": "next start",
     "lint": "eslint",

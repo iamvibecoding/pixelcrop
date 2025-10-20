@@ -9,6 +9,7 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get("image") as File | null;
+
     if (!file) {
       return NextResponse.json({ error: "No image file provided." }, { status: 400 });
     }
@@ -17,7 +18,7 @@ export async function POST(request: Request) {
 
     // Try loading local "large.onnx"
     const modelPath = path.join(process.cwd(), "models", "large.onnx");
-    let modelConfig: any = "medium"; // Fallback default
+    let modelConfig: string | { buffer: Buffer } = "medium"; // FIX: Replace 'any' with proper type
 
     try {
       const modelBuffer = await fs.readFile(modelPath);
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
 
     const processedImageBlob = await removeBackground(file, {
       model: modelConfig,
-      output: { 
+      output: {
         type: "foreground",
         format: "image/png",
         quality: 1.0
@@ -37,13 +38,14 @@ export async function POST(request: Request) {
     });
 
     console.log("[API SUCCESS] Background removal successful.");
-    return new NextResponse(processedImageBlob, { 
-      status: 200, 
-      headers: { "Content-Type": "image/png" } 
+    return new NextResponse(processedImageBlob, {
+      status: 200,
+      headers: { "Content-Type": "image/png" }
     });
 
-  } catch (err: any) {
+  } catch (err: unknown) { // FIX: Replace 'any' with 'unknown'
     console.error("API CRITICAL ERROR", err);
-    return NextResponse.json({ error: err.message || "Unknown error" }, { status: 500 });
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
