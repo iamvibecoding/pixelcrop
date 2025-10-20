@@ -5,27 +5,17 @@ interface WebpackContext {
   isServer: boolean;
 }
 
-interface CustomNextConfig extends NextConfig {
-  webpack?: (config: Configuration, options: WebpackContext) => Configuration;
-}
-
-const nextConfig: CustomNextConfig = {
-  // Disable ESLint during builds
+const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-
-  // Disable TypeScript type checking during builds
   typescript: {
     ignoreBuildErrors: true,
   },
-
   webpack: (config: Configuration, { isServer }: WebpackContext) => {
-    // Ensure module and rules exist
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
 
-    // Handle model asset files correctly
     config.module.rules.push({
       test: /\.(onnx|bin|tflite|dat)$/,
       type: "asset/resource",
@@ -36,8 +26,6 @@ const nextConfig: CustomNextConfig = {
 
     return config;
   },
-
-  // Keep background-removal package external on server
   serverExternalPackages: ["@imgly/background-removal-node"],
 };
 
