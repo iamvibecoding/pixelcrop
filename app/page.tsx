@@ -118,10 +118,16 @@ const Header = () => {
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#F25912] to-[#F25912] group-hover:w-full transition-all duration-300"></span>
                             </a>
                         </nav>
-                        <a href="https://github.com/iamvibecoding" target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-2 bg-[#1D1616] text-[#EEEEEE] text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#F25912] transition-colors shadow-md hover:shadow-lg">
-                            <GithubIcon />
-                            Follow
+                        <a 
+                            href="https://github.com/iamvibecoding/pixelcrop" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="hidden sm:flex items-center gap-2 bg-[#1D1616] text-[#EEEEEE] text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#F25912] transition-colors shadow-md hover:shadow-lg"
+                            aria-label="Star iamvibecoding/pixelcrop on GitHub"
+                        >
+                            <GithubIcon />GitHub
                         </a>
+
                         <button className="md:hidden text-[#1D1616] hover:text-[#F25912] transition-colors" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
                         </button>

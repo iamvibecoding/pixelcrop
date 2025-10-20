@@ -1,8 +1,12 @@
 {
   "name": "pixelcrop",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamvibecoding/pixelcrop.git"
+  },
+  "author": "iamvibecoding",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
