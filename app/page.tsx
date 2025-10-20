@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useEffect, useRef, memo } from 'react';
-import Image from 'next/image'; // <-- Added this import
+import Image from 'next/image'; // <-- Import is already correct
 
 // --- SVG Icons (Memoized for performance) ---
 const UploadIcon = memo(({ className = "w-6 h-6" }: { className?: string }) => (
@@ -220,12 +220,12 @@ const BackgroundRemoverTool = () => {
           // Try to parse a JSON error response from the server
           const errorData = await response.json();
           errorMessage = errorData.error || `Server error: ${response.status}`;
-        } catch (jsonError) {
+        } catch (_jsonError) { // <-- FIX: Prefixed with _
           // If the error response isn't JSON, read it as plain text
           try {
             const errorText = await response.text();
             errorMessage = errorText || `Server error: ${response.status}`;
-          } catch (textError) {
+          } catch (_textError) { // <-- FIX: Prefixed with _
             // Fallback if reading the error text also fails
             errorMessage = `Server error: ${response.status}`;
           }
@@ -328,12 +328,15 @@ const BackgroundRemoverTool = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="flex flex-col items-center group">
                             <h3 className="text-lg font-semibold text-[#1D1616] mb-4">Original</h3>
-                            <div className="w-full aspect-square bg-gray-100 rounded-3xl overflow-hidden border border-gray-200/50 shadow-xl shadow-gray-200/50 group-hover:shadow-2xl group-hover:shadow-gray-300/50 transition-all duration-300 group-hover:scale-[1.02] flex items-center justify-center p-6">
-                                <img src={originalImageSrc} alt="Original" className="max-w-full max-h-full object-contain" />
+                            {/* --- FIX 1: Added `relative` to parent div --- */}
+                            <div className="w-full aspect-square bg-gray-100 rounded-3xl overflow-hidden border border-gray-200/50 shadow-xl shadow-gray-200/50 group-hover:shadow-2xl group-hover:shadow-gray-300/50 transition-all duration-300 group-hover:scale-[1.02] flex items-center justify-center p-6 relative">
+                                {/* --- FIX 1: Replaced `<img>` with `Image` component --- */}
+                                {originalImageSrc && <Image src={originalImageSrc} alt="Original" className="object-contain" fill sizes="(max-width: 768px) 100vw, 50vw" />}
                             </div>
                         </div>
                         <div className="flex flex-col items-center group">
                            <h3 className="text-lg font-semibold text-[#1D1616] mb-4">Result</h3>
+                            {/* --- FIX 2: Added `relative` to parent div --- */}
                             <div className="w-full aspect-square rounded-3xl overflow-hidden flex items-center justify-center relative border border-gray-200/50 shadow-xl shadow-gray-200/50 group-hover:shadow-2xl group-hover:shadow-gray-300/50 transition-all duration-300 group-hover:scale-[1.02] p-6" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' x='0' y='0' fill='%23f3f4f6'/%3E%3Crect width='10' height='10' x='10' y='10' fill='%23f3f4f6'/%3E%3Crect width='10' height='10' x='0' y='10' fill='white'/%3E%3Crect width='10' height='10' x='10' y='0' fill='white'/%3E%3C/svg%3E")`}}>
                                 {isLoading && (
                                     <div className="absolute inset-0 bg-white/95 backdrop-blur-lg flex flex-col items-center justify-center z-20">
@@ -341,8 +344,9 @@ const BackgroundRemoverTool = () => {
                                         <p className="mt-6 text-lg font-semibold bg-gradient-to-r from-[#F25912] to-[#F25912] bg-clip-text text-transparent animate-pulse">Processing Magic...</p>
                                     </div>
                                 )}
+                                {/* --- FIX 2: Replaced `<img>` with `Image` component --- */}
                                 {processedImageSrc && !isLoading && (
-                                    <img src={processedImageSrc} alt="Processed" className="max-w-full max-h-full object-contain" />
+                                    <Image src={processedImageSrc} alt="Processed" className="object-contain" fill sizes="(max-width: 768px) 100vw, 50vw" />
                                 )}
                                 {!processedImageSrc && !isLoading && (
                                     <div className="text-center text-gray-400 p-4 flex flex-col items-center gap-3">
@@ -521,7 +525,7 @@ export default function LandingPage() {
       <div className="min-h-screen font-sans relative overflow-x-hidden bg-[#EEEEEE] eng-grid-bg">
         
         <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-[#F25912]/20 to-[#F25912]/20 rounded-full blur-3xl animate-blob"></div>
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-[#F25912]/20 to-[#F2s912]/20 rounded-full blur-3xl animate-blob"></div>
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-[#F25912]/20 to-[#F25912]/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: '2s' }}></div>
         </div>
         

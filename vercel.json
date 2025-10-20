@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/api/remove-background/route.ts": {
+      "includeFiles": "models/**"
+    }
+  }
+}

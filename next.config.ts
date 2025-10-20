@@ -11,19 +11,20 @@ interface CustomNextConfig extends NextConfig {
 
 const nextConfig: CustomNextConfig = {
   webpack: (config: Configuration, { isServer }: WebpackContext) => {
-    // Ensure externals exists
-    config.externals = (config.externals || []) as ExternalItem[];
-
-    // Keep the native background-removal package external on the server
-    if (isServer) {
-      (config.externals as unknown[]).push({
-        "@imgly/background-removal-node": "commonjs @imgly/background-removal-node",
-      });
-    }
-
-    // Handle model asset files
+    // Ensure module and rules exist
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
+
+    // Keep the native background-removal package external on the server
+    // Note: We don't need the `isServer` check here if using serverExternalPackages
+    // config.externals = (config.externals || []) as ExternalItem[];
+    // if (isServer) {
+    //   (config.externals as unknown[]).push({
+    //     "@imgly/background-removal-node": "commonjs @imgly/background-removal-node",
+    //   });
+    // }
+
+    // Handle model asset files correctly
     config.module.rules.push({
       test: /\.(onnx|bin|tflite|dat)$/,
       type: "asset/resource",
@@ -35,9 +36,13 @@ const nextConfig: CustomNextConfig = {
     return config;
   },
 
-  experimental: {
-    serverComponentsExternalPackages: ["@imgly/background-removal-node"],
-  },
+  // --- FIX: Use the new key ---
+  serverExternalPackages: ["@imgly/background-removal-node"],
+
+  // Remove the old experimental key if it's still there
+  // experimental: {
+  //   serverComponentsExternalPackages: ["@imgly/background-removal-node"],
+  // },
 };
 
 export default nextConfig;
