@@ -1,7 +1,8 @@
 import { removeBackground } from "@imgly/background-removal-node";
 import { NextResponse } from "next/server";
-import path from "path";
-import { promises as fs } from "fs";
+// No longer need fs or path
+// import path from "path";
+// import { promises as fs } from "fs";
 
 export const runtime = "nodejs";
 
@@ -15,20 +16,32 @@ export async function POST(request: Request) {
 
     console.log(`[API INFO] File received: ${file.name}, Type: ${file.type}`);
 
-    // Try loading local "large.onnx"
-    const modelPath = path.join(process.cwd(), "models", "large.onnx");
+    // --- UPDATED LOGIC: Fetch medium model from /assets/ ---
+    const baseUrl = new URL(request.url).origin;
+    // This model.onnx is the medium model, copied by your postinstall script
+    const modelUrl = `${baseUrl}/assets/model.onnx`;
     let modelConfig: any = "medium"; // Fallback default
 
     try {
-      const modelBuffer = await fs.readFile(modelPath);
-      console.log("[API INFO] Using local large.onnx model");
+      console.log(`[API INFO] Attempting to fetch model from: ${modelUrl}`);
+      const response = await fetch(modelUrl);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch model: ${response.status} ${response.statusText}`);
+      }
+
+      const modelBuffer = await response.arrayBuffer();
+      console.log("[API INFO] Successfully fetched and using public medium model (model.onnx)");
       modelConfig = { buffer: modelBuffer };
-    } catch {
-      console.warn("[API WARN] large.onnx not found locally — falling back to medium model");
+
+    } catch (err: any) {
+      // If fetching fails, it will just use the default "medium" config
+      console.warn(`[API WARN] Could not fetch public model.onnx (${err.message}) — falling back to internal medium model`);
     }
+    // --- END OF UPDATED LOGIC ---
 
     const processedImageBlob = await removeBackground(file, {
-      model: modelConfig,
+      model: modelConfig, // Use the fetched model (or fallback)
       output: { 
         type: "foreground",
         format: "image/png",

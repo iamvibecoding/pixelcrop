@@ -1,6 +1,11 @@
-# This file configures your Netlify deployment.
+# Remove all 'included_files' lines related to models or assets.
+# Netlify's build process handles the 'public' folder automatically.
+# You only need to list files that are *outside* the normal build, like .env files.
 
 [functions]
-  # This tells Netlify to find your 'models' directory
-  # and include it in all serverless function bundles.
-  included_files = ["models/**"]
+  included_files = [
+    ".env",
+    ".env.production",
+    ".env.local",
+    ".env.production.local"
+  ]
