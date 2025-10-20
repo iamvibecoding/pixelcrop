@@ -1,9 +1,8 @@
-import { removeBackground } from "@imgly/background-removal-node";
 import { NextResponse } from "next/server";
 import path from "path";
 import { promises as fs } from "fs";
 
-export const runtime = "nodejs";
+export const runtime = "nodejs"; 
 
 export async function POST(request: Request) {
   try {
@@ -15,9 +14,16 @@ export async function POST(request: Request) {
 
     console.log(`[API INFO] File received: ${file.name}, Type: ${file.type}`);
 
-    // Try loading local "large.onnx"
+    // ✅ Convert file to Buffer
+    const arrayBuffer = await file.arrayBuffer();
+    const inputBuffer = Buffer.from(arrayBuffer);
+
+    // ✅ Dynamically load removeBackground (prevents build hang)
+    const { removeBackground } = await import("@imgly/background-removal-node");
+
+    // ✅ Try loading local "large.onnx"
     const modelPath = path.join(process.cwd(), "models", "large.onnx");
-    let modelConfig: any = "medium"; // Fallback default
+    let modelConfig: any = "medium";
 
     try {
       const modelBuffer = await fs.readFile(modelPath);
@@ -27,9 +33,9 @@ export async function POST(request: Request) {
       console.warn("[API WARN] large.onnx not found locally — falling back to medium model");
     }
 
-    const processedImageBlob = await removeBackground(file, {
+    const processedBuffer = await removeBackground(inputBuffer, {
       model: modelConfig,
-      output: { 
+      output: {
         type: "foreground",
         format: "image/png",
         quality: 1.0
@@ -37,9 +43,9 @@ export async function POST(request: Request) {
     });
 
     console.log("[API SUCCESS] Background removal successful.");
-    return new NextResponse(processedImageBlob, { 
-      status: 200, 
-      headers: { "Content-Type": "image/png" } 
+    return new NextResponse(processedBuffer, {
+      status: 200,
+      headers: { "Content-Type": "image/png" }
     });
 
   } catch (err: any) {
