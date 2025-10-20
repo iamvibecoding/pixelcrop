@@ -12,15 +12,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  
-  // Exclude large dependencies from tracing
-  outputFileTracing: true,
+
+  // Exclude large onnxruntime-node binaries from the function bundle
   experimental: {
-    outputFileTracingExcludes: {
-      '/api/remove-background': [
-        'node_modules/onnxruntime-node/bin/**/*',
-      ],
-    },
+    serverComponentsExternalPackages: [
+      'onnxruntime-node'
+    ],
   },
 
   webpack: (config: Configuration, { isServer }: WebpackContext) => {
