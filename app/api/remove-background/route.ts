@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     });
 
   } catch (err: any) {
-    console.error("🔥🔥🔥 [API CRITICAL ERROR] 🔥🔥🔥", err);
+    console.error("[API CRITICAL ERROR]", err);
     return NextResponse.json({ error: err.message || "Unknown error" }, { status: 500 });
   }
 }
