@@ -11,7 +11,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "mkdir -p public/assets && cp -R node_modules/@imgly/background-removal-node/dist/* public/assets/"
   },
   "dependencies": {
     "@imgly/background-removal": "^1.5.8",
