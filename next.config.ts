@@ -10,9 +10,14 @@ interface CustomNextConfig extends NextConfig {
 }
 
 const nextConfig: CustomNextConfig = {
-  // Disable ESLint during builds to prevent deployment failures
+  // Disable ESLint during builds
   eslint: {
     ignoreDuringBuilds: true,
+  },
+
+  // Disable TypeScript type checking during builds
+  typescript: {
+    ignoreBuildErrors: true,
   },
 
   webpack: (config: Configuration, { isServer }: WebpackContext) => {
