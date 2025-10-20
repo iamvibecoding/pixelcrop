@@ -13,13 +13,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // MOVED: outputFileTracingExcludes is now a top-level property in Next.js 15
-  outputFileTracingExcludes: {
-    '/api/remove-background': [
-      'node_modules/@imgly/background-removal-node/**/*',
-      'node_modules/onnxruntime-node/**/*',
-    ],
-  },
 
   serverExternalPackages: [
     "@imgly/background-removal-node",

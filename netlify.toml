@@ -1,0 +1,6 @@
+# This file configures your Netlify deployment.
+
+[functions]
+  # This tells Netlify to find your 'models' directory
+  # and include it in all serverless function bundles.
+  included_files = ["models/**"]
