@@ -1,33 +1,30 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-// @ts-ignore: allow importing global CSS in Next.js layout
-import "./globals.css";
+// app/layout.tsx
+import './globals.css'; // <-- MUST BE THE FIRST IMPORT
+import { Poppins } from 'next/font/google';
+import { Metadata } from 'next';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Font setup
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-poppins', // Creates CSS variable '--font-poppins'
 });
 
 export const metadata: Metadata = {
-  title: "Pixelcrop - Background Remover",
-  description: "Easily remove image backgrounds with Pixelcrop",
+  title: 'Pixelcrop - Free AI Background Remover',
+  description: 'Instantly remove the background from any image with a single click, powered by cutting-edge AI. 100% automatically and free.',
+  // Add more metadata if needed
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      {/* Apply font variable to body, use 'font-sans' utility class */}
+      <body className={`${poppins.variable} font-sans`}>
         {children}
       </body>
     </html>
