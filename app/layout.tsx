@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const siteUrl = "https://pixelcrop.app"; // change to your canonical domain
+  const siteUrl = "https://pixelcrop.online"; // change to your canonical domain
   const logoUrl = `${siteUrl}/pixelcrop-logo.jpg`; // update if different
   const twitter = "@iamvibecoder"; // optional, if you have one
 
