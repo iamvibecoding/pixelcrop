@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 // @ts-ignore: allow importing global CSS in Next.js layout
 import "./globals.css";
 
@@ -13,68 +14,33 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const siteUrl = "https://pixelcrop.online"; // change to your canonical domain
-  const logoUrl = `${siteUrl}/pixelcrop-logo.jpg`; // update if different
-  const twitter = "@iamvibecoder"; // optional, if you have one
+// ... (your metadata and other code) ...
 
-  const webSiteJsonLd = {
-    "@context": "https://schema.org",
-    "@type": ["WebSite", "Organization"],
-    "@id": `${siteUrl}#website`,
-    "url": siteUrl,
-    "name": "Pixelcrop",
-    "description": "Remove image backgrounds online—fast, precise, and privacy‑first.",
-    "inLanguage": "en",
-    "logo": {
-      "@type": "ImageObject",
-      "url": logoUrl
-    },
-    "sameAs": [
-      "https://github.com/iamvibecoding/pixelcrop"
-    ],
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": `${siteUrl}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string"
-    }
-  };
+export default function RootLayout({ children }: { children: React.Node }) {
+  // ... (your JSON-LD scripts) ...
 
-  const softwareAppJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Pixelcrop – Background Remover",
-    "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "Web, iOS, Android, macOS, Windows",
-    "url": siteUrl,
-    "image": logoUrl,
-    "description": "AI background remover for PNG/JPEG/WebP with high‑fidelity cutouts and instant downloads.",
-    "softwareVersion": "1.0.0",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "category": "Free"
-    }
-    // Optionally add aggregateRating and review if/when you have real data:
-    // "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "127" }
-  };
+  // Store the ID in a variable
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c")
-          }}
+        {/* ... (your JSON-LD scripts) ... */}
+        
+        {/* Paste your Google Analytics scripts here */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+          strategy="afterInteractive"
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(softwareAppJsonLd).replace(/</g, "\\u003c")
-          }}
-        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gaMeasurementId}');
+          `}
+        </Script>
+        
         {children}
       </body>
     </html>
