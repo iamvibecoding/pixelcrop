@@ -8,6 +8,29 @@ export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   try {
+    //  API KEY SECURITY CHECK 
+    // Get the API key from the 'x-api-key' header
+    const incomingApiKey = request.headers.get("x-api-key");
+    
+    // Get the secret key stored on your server
+    const serverApiKey = process.env.SECRET_API_KEY;
+
+    // 1. Check if your server has the key configured
+    if (!serverApiKey) {
+      console.error("[API SECURITY ERROR] SECRET_API_KEY is not set in environment variables.");
+      // Don't tell the user *why* it failed, just that it's a server error.
+      return NextResponse.json({ error: "Internal server configuration error." }, { status: 500 });
+    }
+
+    // 2. Check if the incoming key is missing or incorrect
+    if (incomingApiKey !== serverApiKey) {
+      console.warn(`[API SECURITY WARN] Unauthorized attempt with key: ${incomingApiKey}`);
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    // --- END OF SECURITY CHECK ---
+
+
+    // --- Original code starts here (only runs if key is valid) ---
     const formData = await request.formData();
     const file = formData.get("image") as File | null;
     if (!file) {

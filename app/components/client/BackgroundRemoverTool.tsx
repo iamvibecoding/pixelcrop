@@ -101,6 +101,15 @@ export default function BackgroundRemoverTool() {
       return;
     }
 
+    // --- 🚀 ADDED: Check for API Key ---
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+    if (!apiKey) {
+      setError("Client API Key is not configured. Please contact support.");
+      console.error("Error: NEXT_PUBLIC_API_KEY is not set in .env.local");
+      return;
+    }
+    // --- End of added block ---
+
     setIsLoading(true);
     setError(null);
 
@@ -110,6 +119,11 @@ export default function BackgroundRemoverTool() {
 
       const response = await fetch("/api/remove-background", {
         method: "POST",
+        // Headers with API Key ---
+        headers: {
+          'x-api-key': apiKey,
+        },
+        // --- End of added block ---
         body: formData,
       });
 
@@ -117,7 +131,12 @@ export default function BackgroundRemoverTool() {
         let message: string;
         try {
           const json = await response.json();
-          message = json.error || `Server error: ${response.status}`;
+          // --- 🚀 ADDED: Handle 401 Unauthorized ---
+          if (response.status === 401) {
+            message = "Authentication failed. Please check your API Key.";
+          } else {
+            message = json.error || `Server error: ${response.status}`;
+          }
         } catch {
           try {
             const text = await response.text();
