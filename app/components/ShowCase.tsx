@@ -20,9 +20,9 @@ export default function SingleResultCard({
   <div className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-[#F25912]/5 to-transparent -z-10 blur-3xl opacity-35" />
   <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[#F25912]/5 to-transparent -z-10 blur-3xl opacity-35" />
 
-  <div className="mx-auto w-full md:w-[64vw] max-w-3xl">
-    <div className="relative mx-auto w-full rounded-xl overflow-hidden border border-white/25 shadow-inner bg-gradient-to-br from-gray-50/50 to-gray-100/50 px-3 py-3">
-      <div className="relative mx-auto w-full max-w-2xl aspect-[16/10] rounded-lg overflow-hidden border border-white/20 bg-white/0">
+  <div className="mx-auto w-full md:w-[64vw] max-w-4xl ">
+    <div className="relative mx-auto w-full overflow-hidden border border-white/25 shadow-inner bg-gradient-to-br from-gray-50/40 to-gray-100/40 px-5 py-5 rounded-4xl">
+      <div className="relative mx-auto w-full max-w-3xl aspect-[16/10] rounded-lg overflow-hidden border border-white/20 bg-white/0">
         <Image
           src={src}
           alt={alt}

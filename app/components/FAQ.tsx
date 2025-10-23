@@ -127,29 +127,6 @@ export default function FAQ() {
           </div>
         </details>
 
-        <details className="group bg-white/60 backdrop-blur-md rounded-2xl border border-white/30 shadow-lg shadow-gray-300/20 p-6 transition-all duration-300 ease-in-out hover:bg-white/70">
-          <summary className="cursor-pointer text-lg font-semibold text-[#1D1616] flex justify-between items-center list-none">
-            How do I run Pixelcrop locally?
-             <span className="ml-4 transition-transform duration-300 group-open:rotate-45">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-              </svg>
-            </span>
-          </summary>
-          <div className="mt-4 text-gray-700 opacity-0 group-open:opacity-100 transition-opacity duration-300">
-            <p>Clone the repo, install dependencies, and start the dev server:</p>
-            <pre className="mt-3 bg-gray-100 p-3 rounded-lg overflow-x-auto text-sm">
-{`git clone https://github.com/iamvibecoding/pixelcrop.git
-cd pixelcrop
-npm install
-npm run dev
-# open http://localhost:3000`}
-            </pre>
-             <p className="mt-3">
-              These steps reproduce the full landing experience with the background‑removal workflow.
-            </p>
-          </div>
-        </details>
       </div>
     </section>
   );
