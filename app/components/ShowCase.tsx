@@ -33,7 +33,7 @@ export default function SingleResultCard({
         />
       </div>
       {/* caption outside, with smaller top margin */}
-      <p className="mt-2 text-sm sm:text-[15px] text-center text-gray-600 leading-relaxed max-w-md mx-auto">
+      <p className="mt-2 text-sm sm:text-[18px] text-center text-gray-600 leading-relaxed max-w-md mx-auto">
         {caption}
       </p>
     </div>
