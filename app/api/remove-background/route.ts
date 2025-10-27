@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       output: { 
         type: "foreground",
         format: "image/png",
-        quality: 1.0
+        quality: 0.90
       }
     });
 
