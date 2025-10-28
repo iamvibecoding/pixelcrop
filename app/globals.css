@@ -1,6 +1,15 @@
 /* app/globals.css */
 @import "tailwindcss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Adjust this value to match/exceed your header height (h-16 = 4rem) */
+    scroll-padding-top: 5rem; /* 80px */
+  }
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;

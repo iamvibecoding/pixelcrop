@@ -1,5 +1,3 @@
-// FILE: app/layout.tsx
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
@@ -24,24 +22,24 @@ const mainLogoForSocial = `${siteUrl}/pixelcrop-logo.jpg`;
 // --- Metadata ---
 export const metadata: Metadata = {
   title: {
-    default: "Pixelcrop – Fast, Private AI Background Remover",
-    template: "%s | Pixelcrop",
+    default: "Pixelcrop AI – Fast, Private AI Background Remover",
+    template: "%s | Pixelcrop AI",
   },
   description:
     "Remove image backgrounds online—fast, precise, and privacy-first.",
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Pixelcrop – Fast, Private AI Background Remover",
+    title: "Pixelcrop AI – Fast, Private AI Background Remover",
     description:
       "Remove image backgrounds online—fast, precise, and privacy-first.",
     url: siteUrl,
-    siteName: "Pixelcrop",
+    siteName: "Pixelcrop AI",
     images: [
       {
         url: mainLogoForSocial,
         width: 1200,
         height: 630,
-        alt: "Pixelcrop Logo",
+        alt: "Pixelcrop AI Logo",
       },
     ],
     locale: "en_US",
@@ -49,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pixelcrop – Fast, Private AI Background Remover",
+    title: "Pixelcrop AI – Fast, Private AI Background Remover",
     description:
       "Remove image backgrounds online—fast, precise, and privacy-first.",
     creator: twitterHandle,
@@ -79,7 +77,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteUrl}#organization`,
-    name: "Pixelcrop",
+    name: "Pixelcrop AI",
     url: siteUrl,
     logo: {
       "@type": "ImageObject",
@@ -96,7 +94,7 @@ export default function RootLayout({
     "@type": "WebSite",
     "@id": `${siteUrl}#website`,
     url: siteUrl,
-    name: "Pixelcrop",
+    name: "Pixelcrop AI",
     description:
       "Remove image backgrounds online—fast, precise, and privacy-first.",
     publisher: { "@id": `${siteUrl}#organization` },
@@ -112,7 +110,7 @@ export default function RootLayout({
   const softwareAppJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Pixelcrop – Background Remover",
+    name: "Pixelcrop AI – Background Remover",
     applicationCategory: "MultimediaApplication",
     operatingSystem: "Web, iOS, Android, macOS, Windows",
     url: siteUrl,
@@ -130,7 +128,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth scroll-pt-20`}>
       <body className="antialiased">
         {/* --- Structured Data (JSON-LD) --- */}
         <script
