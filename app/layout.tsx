@@ -17,7 +17,8 @@ const geistMono = Geist_Mono({
 // --- Constants ---
 const siteUrl = "https://pixelcrop.online";
 const twitterHandle = "@iamvibecoder";
-const mainLogoForSocial = `${siteUrl}/pixelcrop-logo.jpg`;
+const mainLogoForSocial = `${siteUrl}/pixelcrop-logo.jpg`; // Keep for social media
+const organizationLogo = `${siteUrl}/pixelcrop-logo-square.png`; // New square logo for Google
 
 // --- Metadata ---
 export const metadata: Metadata = {
@@ -81,9 +82,9 @@ export default function RootLayout({
     url: siteUrl,
     logo: {
       "@type": "ImageObject",
-      url: mainLogoForSocial,
-      width: 1200,
-      height: 630,
+      url: organizationLogo, // Changed to square logo
+      width: 512, // Square dimensions for Google
+      height: 512, // Square dimensions for Google
     },
     sameAs: ["https://github.com/iamvibecoding/pixelcrop"],
   };
@@ -97,7 +98,9 @@ export default function RootLayout({
     name: "Pixelcrop AI",
     description:
       "Remove image backgrounds online—fast, precise, and privacy-first.",
-    publisher: { "@id": `${siteUrl}#organization` },
+    publisher: {
+      "@id": `${siteUrl}#organization`,
+    },
     inLanguage: "en",
     potentialAction: {
       "@type": "SearchAction",
@@ -124,33 +127,32 @@ export default function RootLayout({
       priceCurrency: "USD",
       category: "Free",
     },
-    publisher: { "@id": `${siteUrl}#organization` },
+    publisher: {
+      "@id": `${siteUrl}#organization`,
+    },
   };
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth scroll-pt-20`}>
-      <body className="antialiased">
+    <html lang="en">
+      <head>
         {/* --- Structured Data (JSON-LD) --- */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(organizationJsonLd),
           }}
-          key="organization-jsonld"
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(webSiteJsonLd).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(webSiteJsonLd),
           }}
-          key="website-jsonld"
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(softwareAppJsonLd).replace(/</g, "\\u003c"),
+            __html: JSON.stringify(softwareAppJsonLd),
           }}
-          key="softwareapp-jsonld"
         />
 
         {/* --- Google Analytics (optional) --- */}
@@ -159,9 +161,8 @@ export default function RootLayout({
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
               strategy="afterInteractive"
-              key="gtag-script"
             />
-            <Script id="google-analytics" strategy="afterInteractive" key="ga-inline-script">
+            <Script id="google-analytics" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
@@ -171,7 +172,10 @@ export default function RootLayout({
             </Script>
           </>
         )}
-
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         {/* --- Page Content --- */}
         {children}
       </body>
